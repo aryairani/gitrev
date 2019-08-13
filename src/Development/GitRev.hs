@@ -37,6 +37,7 @@ module Development.GitRev
   , gitCommitCount
   , gitCommitDate
   , gitDescribe
+  , gitDescribe'
   , gitDirty
   , gitDirtyTracked
   , gitHash
@@ -150,6 +151,13 @@ gitBranch =
 gitDescribe :: ExpQ
 gitDescribe =
   stringE =<< runGit ["describe", "--long", "--always"] "UNKNOWN" IdxNotUsed
+
+gitDescribe' :: ExpQ
+gitDescribe' =
+  stringE =<< runGit ["describe", "--tags", "--always", "--dirty='"]
+                     "unknown"
+                     IdxNotUsed
+
 
 -- | Return @True@ if there are non-committed files present in the
 -- repository
